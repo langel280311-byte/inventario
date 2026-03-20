@@ -1,11 +1,11 @@
 
-inventario = []
 
-# ---------------- FUNCION AGREGAR ----------------
+
+# FUNCION AGREGAR 
 def agregar_producto(inventario):
     print("\n--- Agregar producto ---")
 
-    # Validar nombre
+# Validar nombre
     while True:
         nombre = input("Nombre del producto: ").strip().capitalize()
         if nombre == "":
@@ -15,7 +15,7 @@ def agregar_producto(inventario):
         else:
             break
 
-    # Validar precio
+# Validar precio
     while True:
         try:
             precio = float(input("Precio del producto: "))
@@ -26,7 +26,7 @@ def agregar_producto(inventario):
         except ValueError:
             print("Ingresa un número válido.")
 
-    # Validar cantidad
+# Validar cantidad
     while True:
         try:
             cantidad = int(input("Cantidad del producto: "))
@@ -36,17 +36,16 @@ def agregar_producto(inventario):
                 break
         except ValueError:
             print("Ingresa un número entero válido.")
-
-    # Crear diccionario
+            
+# diccionario
     producto = {
         "nombre": nombre,
         "precio": precio,
         "cantidad": cantidad
     }
 
-    # Guardar producto
+# Guardar producto
     inventario.append(producto)
-
     print("Producto agregado correctamente")
 
 
