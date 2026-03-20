@@ -1,6 +1,7 @@
 from funciones import *
 
-# MENU PRINCIPAL 
+inventario = []
+
 while True:
     print("\n========== MENÚ ==========")
     print("1. Agregar producto")
@@ -10,15 +11,17 @@ while True:
 
     opcion = input("Elige una opción: ")
 
-    # Condicionales
     if opcion == "1":
         agregar_producto()
+
     elif opcion == "2":
         mostrar_inventario()
+
     elif opcion == "3":
-        calcular_estadisticas()
+        mostrar_estadistica()
+
     elif opcion == "4":
         print("Saliendo del sistema...")
         break
     else:
-        print("Opción inválida. Intenta de nuevo.")
+        print("Opción inválida.")

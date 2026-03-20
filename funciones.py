@@ -1,9 +1,8 @@
 
+inventario = []
 
-# FUNCION 
-def agregar_producto():
-    # Lista donde se guardarán los productos
-    inventario = []
+# ---------------- FUNCION AGREGAR ----------------
+def agregar_producto(inventario):
     print("\n--- Agregar producto ---")
 
     # Validar nombre
@@ -38,32 +37,31 @@ def agregar_producto():
         except ValueError:
             print("Ingresa un número entero válido.")
 
-    # Crear diccionario del producto
+    # Crear diccionario
     producto = {
         "nombre": nombre,
         "precio": precio,
         "cantidad": cantidad
     }
 
-    # Guardar en la lista inventario
+    # Guardar producto
     inventario.append(producto)
 
-    print("Producto agregado correctamente ")
+    print("Producto agregado correctamente")
 
 
-# FUNCION
+# Funcion
 def mostrar_inventario(inventario):
     print("\n--- Inventario ---")
 
     if len(inventario) == 0:
         print("El inventario está vacío.")
     else:
-        # Recorrer con for
-        for producto in inventario:
-            print(f"Producto: {producto['nombre']} | Precio: {producto['precio']} | Cantidad: {producto['cantidad']}")
+        for i, producto in enumerate(inventario, start=1):
+            print(f"{i}. Producto: {producto['nombre']} | Precio: {producto['precio']} | Cantidad: {producto['cantidad']}")
 
 
-#  FUNCION 
+# funcion 
 def mostrar_estadistica(inventario):
     print("\n--- Estadísticas ---")
 
@@ -74,7 +72,6 @@ def mostrar_estadistica(inventario):
     total_valor = 0
     total_cantidad = 0
 
-    # Recorrer inventario
     for producto in inventario:
         total_valor += producto["precio"] * producto["cantidad"]
         total_cantidad += producto["cantidad"]
