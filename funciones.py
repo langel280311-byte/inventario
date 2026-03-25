@@ -1,80 +1,70 @@
+# ---------------- SERVICIOS ----------------
 
-inventario = []
-
-# ---------------- FUNCION AGREGAR ----------------
-def agregar_producto(inventario):
-    print("\n--- Agregar producto ---")
-
-    # Validar nombre
-    while True:
-        nombre = input("Nombre del producto: ").strip().capitalize()
-        if nombre == "":
-            print("El nombre no puede estar vacío.")
-        elif nombre.isnumeric():
-            print("El nombre no puede ser solo números.")
-        else:
-            break
-
-    # Validar precio
-    while True:
-        try:
-            precio = float(input("Precio del producto: "))
-            if precio < 0:
-                print("El precio no puede ser negativo.")
-            else:
-                break
-        except ValueError:
-            print("Ingresa un número válido.")
-
-    # Validar cantidad
-    while True:
-        try:
-            cantidad = int(input("Cantidad del producto: "))
-            if cantidad <= 0:
-                print("La cantidad debe ser mayor que 0.")
-            else:
-                break
-        except ValueError:
-            print("Ingresa un número entero válido.")
-
-    # Crear diccionario
-    producto = {
+def agregar_producto(inventario, nombre, precio, cantidad):
+    """Agrega un producto al inventario."""
+    inventario.append({
         "nombre": nombre,
         "precio": precio,
         "cantidad": cantidad
-    }
-
-    # Guardar producto
-    inventario.append(producto)
-
-    print("Producto agregado correctamente")
+    })
 
 
-# Funcion
 def mostrar_inventario(inventario):
-    print("\n--- Inventario ---")
-
-    if len(inventario) == 0:
-        print("El inventario está vacío.")
-    else:
-        for i, producto in enumerate(inventario, start=1):
-            print(f"{i}. Producto: {producto['nombre']} | Precio: {producto['precio']} | Cantidad: {producto['cantidad']}")
-
-
-# funcion 
-def mostrar_estadistica(inventario):
-    print("\n--- Estadísticas ---")
-
-    if len(inventario) == 0:
-        print("No hay productos para calcular.")
+    """Muestra todos los productos."""
+    if not inventario:
+        print("Inventario vacío.")
         return
 
-    total_valor = 0
-    total_cantidad = 0
+    for p in inventario:
+        print(f"{p['nombre']} | Precio: {p['precio']} | Cantidad: {p['cantidad']}")
 
-    for producto in inventario:
-        total_valor += producto["precio"] * producto["cantidad"]
-        total_cantidad += producto["cantidad"]
 
-    print(f"Valor total del inventario: {total_valor}")
-    print(f"Cantidad total de productos: {total_cantidad}")
+def buscar_producto(inventario, nombre):
+    """Busca un producto por nombre."""
+    for p in inventario:
+        if p["nombre"].lower() == nombre.lower():
+            return p
+    return None
+
+
+def actualizar_producto(inventario, nombre, nuevo_precio=None, nueva_cantidad=None):
+    """Actualiza un producto."""
+    p = buscar_producto(inventario, nombre)
+
+    if p:
+        if nuevo_precio is not None:
+            p["precio"] = nuevo_precio
+        if nueva_cantidad is not None:
+            p["cantidad"] = nueva_cantidad
+        return True
+    return False
+
+
+def eliminar_producto(inventario, nombre):
+    """Elimina un producto."""
+    p = buscar_producto(inventario, nombre)
+    if p:
+        inventario.remove(p)
+        return True
+    return False
+
+
+def calcular_estadisticas(inventario):
+    """Calcula estadísticas del inventario."""
+    if not inventario:
+        return None
+
+    subtotal = lambda p: p["precio"] * p["cantidad"]
+
+    unidades_totales = sum(p["cantidad"] for p in inventario)
+    valor_total = sum(subtotal(p) for p in inventario)
+
+    producto_mas_caro = max(inventario, key=lambda p: p["precio"])
+    producto_mayor_stock = max(inventario, key=lambda p: p["cantidad"])
+
+    return {
+        "unidades_totales": unidades_totales,
+        "valor_total": valor_total,
+        "producto_mas_caro": producto_mas_caro,
+        "producto_mayor_stock": producto_mayor_stock
+    }
