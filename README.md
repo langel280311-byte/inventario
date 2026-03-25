@@ -51,3 +51,6 @@ python code.py
 
 ## Autor
 Luis Fuentes
+
+# link Github 
+https://github.com/langel280311-byte/inventario.git
